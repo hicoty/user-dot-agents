@@ -1,0 +1,26 @@
+# install.sh 產生的備份
+*.backup-*
+
+# 機器/個人專屬的本機設定(不版控)
+settings.local.json
+.claude/settings.local.json
+
+# 系統雜物 — macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# 系統雜物 — Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# 系統雜物 — Linux
+*~
+.directory
+.Trash-*

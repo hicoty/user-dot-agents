@@ -1,0 +1,93 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -r *)",
+      "Bash(rm -R *)",
+      "Bash(rm -f *)",
+      "Bash(sudo *)",
+      "Bash(sudo)",
+      "Bash(dd *)",
+      "Bash(dd)",
+      "Bash(mkfs *)",
+      "Bash(mkfs)",
+      "Bash(mkfs.*)",
+      "Bash(diskutil erase *)",
+      "Bash(chmod 777 *)",
+      "Bash(chmod -R 777 *)",
+      "Bash(git reset --hard *)",
+      "Bash(git reset --hard)",
+      "Bash(git push --force *)",
+      "Bash(git push --force)",
+      "Bash(git push -f *)",
+      "Bash(git push -f)",
+      "Bash(git clean -f *)",
+      "Bash(git clean -f)",
+      "Bash(git branch -D *)",
+      "Bash(shutdown *)",
+      "Bash(shutdown)",
+      "Bash(reboot)",
+      "Bash(reboot *)",
+      "Bash(: > *)",
+      "Bash(truncate *)",
+      "Bash(truncate)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/guard-dangerous-commands.py\""
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline.sh\""
+  },
+  "enabledPlugins": {
+    "codex@openai-codex": true,
+    "skill-creator@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
+  },
+  "language": "Chinese",
+  "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "theme": "dark",
+  "autoCompactEnabled": false,
+  "voiceEnabled": true
+}
