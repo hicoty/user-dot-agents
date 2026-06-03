@@ -16,7 +16,9 @@ user-dot-agents/
 │   └── guard-dangerous-commands.py  #   攔截危險 Bash 指令的 PreToolUse hook
 ├── settings.json                    # 原本在 ~/.claude/settings.json
 ├── CLAUDE.md                        # 全域使用者指令
-├── install.sh                       # 跨平台 symlink 安裝腳本
+
+├── install.sh                       # macOS / Linux / Git Bash / WSL 安裝腳本
+├── install.ps1                      # Windows 原生 PowerShell 安裝腳本
 └── README.md
 ```
 
@@ -45,14 +47,29 @@ bash install.sh
 
 ### Windows
 
-本腳本是 bash 腳本,請在 **Git Bash** 或 **WSL** 中執行:
+兩種方式擇一:
+
+**(A) 原生 PowerShell(建議)**
+
+```powershell
+git clone <repo-url> user-dot-agents
+cd user-dot-agents
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+**(B) Git Bash / WSL**
 
 ```bash
 bash install.sh
 ```
 
 注意事項:
-- **Git Bash**:Windows 建立 symlink 需要權限。請先**開啟「開發人員模式」**(設定 → 隱私權與安全性 → 開發人員選項),或**以系統管理員身分**開啟 Git Bash。腳本已自動設定 `MSYS=winsymlinks:nativestrict` 以建立原生 symlink。
+- **建立 symlink 需要權限**:Windows 建立 symlink 需「開發人員模式」或「系統管理員」。
+  - `install.ps1` 會**自動偵測**:若兩者皆無,預設**跳出 UAC 視窗**以系統管理員身分重跑(免改系統設定)。
+  - 不想提權的話,加 `-NoElevate` 參數(`powershell -ExecutionPolicy Bypass -File .\install.ps1 -NoElevate`),腳本改為**直接開啟「開發人員模式」設定頁**引導你打開開關,打開後再重跑即可。
+  - 一勞永逸建議:設定 → 隱私權與安全性 → 開發人員選項 → 開啟「開發人員模式」,之後一般視窗就能建 symlink。
+  - `install.sh` 走 Git Bash/WSL,已自動設定 `MSYS=winsymlinks:nativestrict` 以建立原生 symlink。
+- **PowerShell 執行原則**:若被擋下,可加 `-ExecutionPolicy Bypass`(如上),或先 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`。
 - **WSL**:原生支援 symlink,直接執行即可。
 - 若不想用 symlink,也可改用 `git clone` 後手動複製檔案到對應位置(但之後就無法靠 `git pull` 自動同步)。
 
