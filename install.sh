@@ -3,7 +3,7 @@
 # install.sh — 將本 repo 內容以 symlink 連回使用者家目錄。
 #
 # 對應關係:
-#   skills/<name>/   ->  ~/.agents/skills/<name>   且   ~/.claude/skills/<name>
+#   skills/          ->  ~/.agents/skills          且   ~/.claude/skills(整個資料夾)
 #   hooks/           ->  ~/.claude/hooks
 #   settings.json    ->  ~/.claude/settings.json
 #   CLAUDE.md        ->  ~/.claude/CLAUDE.md
@@ -74,17 +74,11 @@ make_link "$REPO/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
 echo "[3/4] hooks(整個資料夾)"
 make_link "$REPO/hooks" "$CLAUDE_DIR/hooks"
 
-echo "[4/4] skills(每個同時連到 .agents 與 .claude)"
-mkdir -p "$AGENTS_DIR/skills" "$CLAUDE_DIR/skills"
-found_skill=0
-for skill_path in "$REPO"/skills/*/; do
-  [ -d "$skill_path" ] || continue
-  found_skill=1
-  name="$(basename "$skill_path")"
-  make_link "$REPO/skills/$name" "$AGENTS_DIR/skills/$name"
-  make_link "$REPO/skills/$name" "$CLAUDE_DIR/skills/$name"
-done
-[ "$found_skill" -eq 0 ] && echo "  ⤬ skills/ 目錄內沒有任何 skill 子資料夾"
+# 整個 skills/ 資料夾各連一條 symlink(與 hooks 同作法):
+# 之後在 repo 內新增 skill 子資料夾,會透過目錄 symlink 自動出現,免重跑本腳本。
+echo "[4/4] skills(整個資料夾,同時連到 .agents 與 .claude)"
+make_link "$REPO/skills" "$AGENTS_DIR/skills"
+make_link "$REPO/skills" "$CLAUDE_DIR/skills"
 
 echo
 echo "✅ 完成。可重複執行本腳本以同步更新連結。"

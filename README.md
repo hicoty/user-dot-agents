@@ -103,13 +103,13 @@ bash install.sh
 
 | Repo 內來源 | 連結到 |
 | --- | --- |
-| `skills/<name>/` | `~/.agents/skills/<name>` **且** `~/.claude/skills/<name>` |
+| `skills/`(整個資料夾) | `~/.agents/skills` **且** `~/.claude/skills` |
 | `hooks/` | `~/.claude/hooks` |
 | `settings.json` | `~/.claude/settings.json` |
 | `CLAUDE.md` | `~/.claude/CLAUDE.md` |
 
 > [!NOTE]
-> skills 會**同時**連到 `.agents` 與 `.claude` 兩個位置,維持 Claude Code 原本的查找結構。
+> skills 以**整個資料夾**連到 `.agents` 與 `.claude` 兩個位置,維持 Claude Code 原本的查找結構;之後在 repo 內新增 skill 子資料夾會自動生效,免重跑安裝腳本。
 
 ## ⚙️ 安裝腳本行為
 

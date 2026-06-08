@@ -3,7 +3,7 @@
 # install.ps1 — 將本 repo 內容以 symlink 連回使用者家目錄(原生 PowerShell 版)。
 #
 # 對應關係(與 install.sh 一致):
-#   skills/<name>/   ->  ~/.agents/skills/<name>   且   ~/.claude/skills/<name>
+#   skills/          ->  ~/.agents/skills          且   ~/.claude/skills(整個資料夾)
 #   hooks/           ->  ~/.claude/hooks
 #   settings.json    ->  ~/.claude/settings.json
 #   CLAUDE.md        ->  ~/.claude/CLAUDE.md
@@ -112,20 +112,11 @@ Make-Link (Join-Path $Repo 'CLAUDE.md') (Join-Path $ClaudeDir 'CLAUDE.md')
 Write-Host "[3/4] hooks(整個資料夾)"
 Make-Link (Join-Path $Repo 'hooks') (Join-Path $ClaudeDir 'hooks')
 
-Write-Host "[4/4] skills(每個同時連到 .agents 與 .claude)"
-New-Item -ItemType Directory -Force -Path (Join-Path $AgentsDir 'skills') | Out-Null
-New-Item -ItemType Directory -Force -Path (Join-Path $ClaudeDir 'skills') | Out-Null
-$foundSkill = $false
-$skillsRoot = Join-Path $Repo 'skills'
-if (Test-Path -LiteralPath $skillsRoot) {
-  foreach ($skill in Get-ChildItem -LiteralPath $skillsRoot -Directory) {
-    $foundSkill = $true
-    $name = $skill.Name
-    Make-Link $skill.FullName (Join-Path $AgentsDir "skills\$name")
-    Make-Link $skill.FullName (Join-Path $ClaudeDir "skills\$name")
-  }
-}
-if (-not $foundSkill) { Write-Host "  ⤬ skills/ 目錄內沒有任何 skill 子資料夾" }
+# 整個 skills/ 資料夾各連一條 symlink(與 hooks 同作法):
+# 之後在 repo 內新增 skill 子資料夾,會透過目錄 symlink 自動出現,免重跑本腳本。
+Write-Host "[4/4] skills(整個資料夾,同時連到 .agents 與 .claude)"
+Make-Link (Join-Path $Repo 'skills') (Join-Path $AgentsDir 'skills')
+Make-Link (Join-Path $Repo 'skills') (Join-Path $ClaudeDir 'skills')
 
 Write-Host ""
 Write-Host "✅ 完成。可重複執行本腳本以同步更新連結。"
