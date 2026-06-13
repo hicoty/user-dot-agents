@@ -59,7 +59,8 @@
     "codex@openai-codex": true,
     "skill-creator@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "zeabur@zeabur": true
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -79,10 +80,16 @@
         "source": "github",
         "repo": "anthropics/skills"
       }
+    },
+    "zeabur": {
+      "source": {
+        "source": "github",
+        "repo": "zeabur/zeabur-claude-plugin"
+      }
     }
   },
   "language": "Chinese",
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "voice": {
     "enabled": true,
     "mode": "hold"
